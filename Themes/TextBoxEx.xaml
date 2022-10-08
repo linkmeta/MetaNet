@@ -1,0 +1,88 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:tbex="clr-namespace:TextBoxEx">
+
+    <tbex:TextBoxExConverter x:Key="TextBoxExConverter"/>
+
+    <Style TargetType="{x:Type tbex:TextBoxEx}" >
+        <!--Default style-->
+        <Setter Property="BorderBrush" Value="LightGray"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="#3E3E3E" />
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="100"/>
+        <Setter Property="Margin" Value="0,5,10,0"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="IsAddBtnVisible" Value="True"/>
+        <Setter Property="IsRemoveBtnVisible" Value="True"/>
+        <Setter Property="Cursor" Value="Hand"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type tbex:TextBoxEx}">
+                    <Border x:Name="border" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="3"
+                                SnapsToDevicePixels="True">
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="15" />
+                            </Grid.ColumnDefinitions>
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                          Focusable="false" 
+                                          VerticalAlignment="Center"
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          VerticalScrollBarVisibility="Hidden"/>
+
+                            <Grid Grid.Column="1" Margin="0,1,1,1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <RepeatButton Width="25" 
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"
+                                                  Background="White"
+                                                  BorderBrush="White"
+                                                  Name="PART_BtnAdd"
+                                                  Visibility="{Binding Path=(tbex:TextBoxEx.IsAddBtnVisible),RelativeSource={RelativeSource AncestorType=TextBox}, Converter={StaticResource TextBoxExConverter}}">
+                                        <RepeatButton.Content>
+                                            <Image Source="/Themes/up_arrow.png"></Image>
+                                        </RepeatButton.Content>
+                                    </RepeatButton>
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <RepeatButton Width="25"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"
+                                                  Background="White"
+                                                  BorderBrush="White"
+                                                  Name="PART_BtnRemove"
+                                                   Visibility="{Binding Path=(tbex:TextBoxEx.IsRemoveBtnVisible),RelativeSource={RelativeSource AncestorType=TextBox}, Converter={StaticResource TextBoxExConverter}}" >
+                                        <RepeatButton.Content>
+                                            <Image Source="/Themes/down_arrow.png"></Image>
+                                        </RepeatButton.Content>
+                                    </RepeatButton>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.4"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

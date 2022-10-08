@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="MetaNet.Views.SnifferStatsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:MetaNet.Interfaces"
+             xmlns:oxy="http://oxyplot.org/wpf"
+
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <i:BytesSuffixConverter x:Key="BytesSuffixConverter"></i:BytesSuffixConverter>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0" Header="Packets Plot" Style="{StaticResource AccentGroupBox}" >
+            <oxy:PlotView Model="{Binding PlotModelData}"></oxy:PlotView>
+        </GroupBox>
+        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="1" RenderTransformOrigin="0.5,0.5" Background="LightGray" SnapsToDevicePixels="True" ClipToBounds="True" />
+
+        <GroupBox Grid.Row="2" Header="Protocol Stats" Style="{StaticResource AccentGroupBox}"  >
+            <ListView Height="Auto" ItemsSource="{Binding Path=ProtocolStats}" BorderThickness="0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Protocol" Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Protocol}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="No. of packets" Width="120">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=PacketCount}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="No. of bytes" Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=ByteCount, Converter={StaticResource BytesSuffixConverter}}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+        
+        <GridSplitter Grid.Row="3" HorizontalAlignment="Stretch" Height="1" RenderTransformOrigin="0.5,0.5" Background="LightGray" SnapsToDevicePixels="True" ClipToBounds="True" />
+
+        <GroupBox Grid.Row="4" Header="Connection Stats" Style="{StaticResource AccentGroupBox}" >
+            <ListView Height="Auto" Margin="2"
+                  ItemsSource="{Binding Path=ConnectionStats}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Address A" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=AddressA}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Address B" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=AddressB}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Packets A -> B" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=PacketCountAToB}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Bytes A -> B" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=ByteCountAToB, Converter={StaticResource BytesSuffixConverter}}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Packets B -> A" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=PacketCountBToA}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Bytes B -> A" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=ByteCountBToA, Converter={StaticResource BytesSuffixConverter}}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+    </Grid>
+
+</UserControl>

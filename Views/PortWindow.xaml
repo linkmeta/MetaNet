@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="MetaNet.Views.PortWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             
+             xmlns:local="clr-namespace:MetaNet.Views"
+             xmlns:tbex="clr-namespace:TextBoxEx"
+             xmlns:btnex="clr-namespace:ButtonEx"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+   
+    <Grid >
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <!--<ColumnDefinition Width="150"/>-->
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Background="#f4f5f6" UseLayoutRounding="True" Grid.ColumnSpan="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+
+            </Grid.RowDefinitions>
+            <TextBlock Margin="10,10,0,0" HorizontalAlignment="Stretch" Text="Port Listen" VerticalAlignment="Top" FontSize="24" Grid.Row="0" FontWeight="Bold"/>
+            <Separator Margin="10,50,10,0" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" Grid.Row="0"></Separator>
+            <!--<TextBlock Style="{StaticResource MenuItemText}" Text="Network Interfaces" Grid.Row="1"/>-->
+            <StackPanel Margin="10,10,10,0" MinWidth="200" Grid.Row="1">
+                <GroupBox
+                Width="Auto"
+                Height="Auto"
+                HorizontalAlignment="Stretch"
+                Header="Network Interfaces"
+                Style="{StaticResource AccentGroupBox}" >
+                    <Grid Background="White" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <ComboBox x:Name="NetInfoCombox" Margin="0,10,0,0" ItemsSource="{Binding PortModel.NetInfoItemSource}" DisplayMemberPath="description" SelectedIndex="0" SelectedItem="{Binding PortModel.NetInfoItemSource}" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Center" Width="Auto">
+                    </ComboBox>
+                        <TextBlock Margin="5,10,0,0" Grid.Row="1" Text="Name:"/>
+                        <TextBlock Margin="50,10,0,0" Grid.Row="1" Text="{Binding ElementName=NetInfoCombox, Path=SelectedItem.name}"/>
+                        <TextBlock Margin="5,10,0,0" Grid.Row="2" Text="IP:"/>
+                        <TextBlock Margin="50,10,0,0" Grid.Row="2" Text="{Binding ElementName=NetInfoCombox, Path=SelectedItem.ip}"/>
+                        <TextBlock Margin="5,10,0,10" Grid.Row="3" Text="Mask:"/>
+                        <TextBlock Margin="50,10,0,10" Grid.Row="3" Text="{Binding ElementName=NetInfoCombox, Path=SelectedItem.mask}"/>
+                    </Grid>
+
+                </GroupBox>
+            </StackPanel>
+
+            <StackPanel Margin="10,10,10,0" MinWidth="200" Grid.Row="2">
+                <GroupBox Header="Port Config" Style="{StaticResource AccentGroupBox}" >
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <btnex:ButtonEx Margin="0,15,0,10" Content="Refresh" ButtonType="Normal" Grid.Row="3" HorizontalAlignment="Center" Width="100" Height="30" Command="{Binding RefreshCommand}" />
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
+ 
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" SnapsToDevicePixels="True" ClipToBounds="True" Margin="0,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="59*"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid
+                        Width="Auto"
+                        Height="Auto"
+                        Margin="4,6,4,6"
+                            AutoGenerateColumns="True"  ColumnWidth="*"
+                        HeadersVisibility="Column"
+                        ItemsSource="{Binding PortListenStats}"
+                        RowHeight="22" Grid.RowSpan="2" />
+                </Grid>
+            </Grid>
+        </Grid>
+  
+    </Grid>
+</UserControl>

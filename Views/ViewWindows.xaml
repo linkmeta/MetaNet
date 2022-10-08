@@ -1,0 +1,61 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodel="clr-namespace:MetaNet.ViewModels"
+                    xmlns:view="clr-namespace:MetaNet.Views">
+        
+    <!--Data Templates apply Views to ViewModel objects displayed in the UI-->
+    
+    <!--Iperf Page-->
+
+    <DataTemplate DataType="{x:Type viewmodel:IperfViewModel}">
+        <view:IperfWindow/>
+    </DataTemplate>
+    
+    <!--NetworkScan Page-->
+    
+    <DataTemplate DataType="{x:Type viewmodel:NetworkScanViewModel}">
+        <view:NetworkScanWindow/>
+    </DataTemplate>
+    
+    <!--PortScan Page-->
+
+    <DataTemplate DataType="{x:Type viewmodel:PortScanViewModel}">
+        <view:PortScanWindow/>
+    </DataTemplate>
+    
+    <!--Route Page-->
+
+    <DataTemplate DataType="{x:Type viewmodel:RouteViewModel}">
+        <view:RouteWindow/>
+    </DataTemplate>
+    
+    <!--Port Page-->
+
+    <DataTemplate DataType="{x:Type viewmodel:PortViewModel}">
+        <view:PortWindow/>
+    </DataTemplate>
+
+    <!--Server Page-->
+
+    <DataTemplate DataType="{x:Type viewmodel:ServerViewModel}">
+        <view:ServerWindow/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewmodel:TcpViewModel}">
+        <view:TcpView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewmodel:UdpViewModel}">
+        <view:UdpView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewmodel:WebSocketViewModel}">
+        <view:WebSocketView/>
+    </DataTemplate>
+
+    <!--Sniffer Page-->
+    <DataTemplate DataType="{x:Type viewmodel:SnifferViewModel}">
+        <view:SnifferWindow/>
+    </DataTemplate>
+    
+</ResourceDictionary>

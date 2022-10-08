@@ -1,0 +1,83 @@
+﻿<Window x:Class="MetaNet.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Views="clr-namespace:MetaNet.Views"
+        xmlns:vm="clr-namespace:MetaNet.ViewModels"
+        xmlns:tbex="clr-namespace:TextBoxEx"
+        mc:Ignorable="d"
+        Title="MetaNet" Height="450" Width="800" Icon="/Resources/favicon.ico" SnapsToDevicePixels="True" WindowStyle="SingleBorderWindow">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <!--<RowDefinition Height="25"/>-->
+        </Grid.RowDefinitions>
+
+        <!--Menu-->
+        <Grid Grid.Row="0" Background="white" >
+
+            <Menu x:Name="ItemMenu" Grid.Column="0" >
+                <Menu.Background>
+                    <ImageBrush TileMode="Tile"/>
+                </Menu.Background>
+                <MenuItem x:Name="FileMenuItem" Header="File" >
+                    <MenuItem x:Name="ExitMenuItem" Header="Exit" InputGestureText="Alt+F4"/>
+                </MenuItem>
+                <MenuItem x:Name="ToolMenuItem" Header="Tool" >
+                    <MenuItem Header="Calculator" CommandParameter="Calc" Command="{Binding RunMenuCommand}" />
+                </MenuItem>
+
+                <MenuItem x:Name="HelpMenuItem" Header="Help">
+                    <MenuItem Header="Iperf" CommandParameter="Iperf" Command="{Binding RunMenuCommand}"/>
+                    <MenuItem Header="Pcap Filter" CommandParameter="Pcap" Command="{Binding RunMenuCommand}"/>
+                    <MenuItem Header="About MetaNet" CommandParameter="About" Command="{Binding RunMenuCommand}"/>
+                </MenuItem>
+            </Menu>
+        </Grid>
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="180"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Background="#323743">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="10,10,10,5">
+
+                    <TextBox x:Name="SearchBox"
+                         Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource SearchBoxStyle}"/>
+
+                    <TextBlock Text="Search"
+                           Style="{StaticResource SearchTextStyle}"/>
+
+                </Grid>
+                <Grid Grid.Row="1" Margin="10,10,10,0">
+
+                    <ItemsControl ItemsSource="{Binding SourceCollection}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <RadioButton Content="{Binding MenuName}"
+                                             Tag="{Binding MenuImage}" 
+                                             CommandParameter="{Binding MenuName}"
+                                             Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext.MenuCommand}"
+                                             Style="{StaticResource MenuButtonStyle}"                                                                                                                
+                                             GroupName="MenuGroup"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1" Background="Transparent">
+                <ContentControl x:Name="Pages" Content="{Binding SelectedViewModel}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

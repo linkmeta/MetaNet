@@ -1,0 +1,135 @@
+﻿<UserControl x:Class="MetaNet.Views.WebSocketView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MetaNet.Views"
+             xmlns:vm="clr-namespace:MetaNet.Interfaces"
+             xmlns:src="clr-namespace:MetaNet.Themes"
+             xmlns:tbex="clr-namespace:TextBoxEx"
+             xmlns:btnex="clr-namespace:ButtonEx"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <vm:WebSocketConverter x:Key="WebSocketConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="WebSocket Server" Style="{StaticResource AccentGroupBox}" Grid.Row="0" >
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="110"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Margin="5,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black" Text="Server Address" />
+                    <TextBox Grid.Column="1" Margin="0,5,0,5" Height="30" Text="{Binding WebSocketModel.ServerAddress}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                    <btnex:ButtonEx Grid.Column="2" Margin="5,5,5,5" Content="{Binding WebSocketModel.ServerListenBtnName}" ButtonType="Normal"  HorizontalAlignment="Left" Width="100" Height="30" Command="{Binding StartListenCommand}" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="110"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black" Text="Interval(ms)" />
+                    <TextBox  Grid.Column="1" HorizontalAlignment="Left" Text="{Binding WebSocketModel.ServerSendInterval}"/>
+                    <TextBlock Grid.Column="2" Text="Send String" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                    <TextBox Grid.Column="3" HorizontalAlignment="Stretch" Text="{Binding WebSocketModel.ServerSendStr}"  Width="Auto"/>
+
+                    <btnex:ButtonEx Grid.Column="4" Margin="5,0,5,0" Content="{Binding WebSocketModel.ServerSendBtnName}" ButtonType="Normal"  HorizontalAlignment="Right" Width="100" Height="30" Command="{Binding ServerAutoSendCommand}" />
+
+                </Grid>
+
+
+                <TextBox Grid.Row="2" Margin="0,5,0,10" FontSize="12" Height="Auto" VerticalAlignment="Stretch" VerticalContentAlignment="Top"  src:TextBoxBehaviour.ScrollOnTextChanged="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" TextWrapping="NoWrap" >
+                    <TextBox.Text>
+                        <MultiBinding Converter="{StaticResource WebSocketConverter}">
+                            <Binding Path="wsRecv" Mode="OneWay"/>
+                            <Binding Path="wsRecv.Count" Mode="OneWay" />
+                        </MultiBinding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <Grid Grid.Row="3">
+
+                    <TextBox Margin="5,0,115,10" FontSize="12" Height="30" Text="{Binding WebSocketModel.ServerSend}"/>
+                    <btnex:ButtonEx  Margin="0,0,60,10" Height="30" Width="50" Content="Send" ButtonType="Normal" HorizontalAlignment="Right" Command="{Binding ServerSendCommand}" />
+                    <btnex:ButtonEx  Margin="0,0,5,10" Height="30" Width="50" Content="Clear" ButtonType="Normal" HorizontalAlignment="Right" Command="{Binding ServerSendClearCommand}" />
+                </Grid>
+            </Grid>
+        </GroupBox>
+
+        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Height="1" RenderTransformOrigin="0.5,0.5" Background="LightGray" SnapsToDevicePixels="True" ClipToBounds="True" />
+
+        <GroupBox Grid.Row="2" Header="WebSocket Client" Style="{StaticResource AccentGroupBox}" >
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="35"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="110"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Margin="5,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black" Text="Server Address" />
+                    <TextBox Grid.Column="1" Margin="0,5,0,5" Height="30" Text="{Binding WebSocketModel.ServerIp}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                    <btnex:ButtonEx Grid.Column="2" Margin="5,5,5,5" Content="{Binding WebSocketModel.ClientConnectBtnName}" ButtonType="Normal"  HorizontalAlignment="Left" Width="100" Height="30" Command="{Binding ClientConnectCommand}" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="110"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black" Text="Interval(ms)" />
+                    <TextBox  Grid.Column="1" HorizontalAlignment="Left" Text="{Binding WebSocketModel.ClientSendInterval}"/>
+                    <TextBlock Grid.Column="2" Text="Send String" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                    <TextBox Grid.Column="3" HorizontalAlignment="Stretch" Text="{Binding WebSocketModel.ClientSendStr}"  Width="Auto"/>
+
+                    <btnex:ButtonEx Grid.Column="4" Margin="5,0,5,0" Content="{Binding WebSocketModel.ClientSendBtnName}" ButtonType="Normal"  HorizontalAlignment="Right" Width="100" Height="30" Command="{Binding ClientAutoSendCommand}" />
+
+                </Grid>
+
+
+                <TextBox Grid.Row="2" Margin="0,5,0,10" FontSize="12" Height="Auto" VerticalAlignment="Stretch" VerticalContentAlignment="Top"  src:TextBoxBehaviour.ScrollOnTextChanged="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" TextWrapping="NoWrap" >
+                    <TextBox.Text>
+                        <MultiBinding Converter="{StaticResource WebSocketConverter}">
+                            <Binding Path="wsClientRecv" Mode="OneWay"/>
+                            <Binding Path="wsClientRecv.Count" Mode="OneWay" />
+                        </MultiBinding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <Grid Grid.Row="3">
+
+                    <TextBox Margin="5,0,115,5" FontSize="12" Height="30" Text="{Binding WebSocketModel.ClientSend}"/>
+                    <btnex:ButtonEx  Margin="0,0,60,5" Height="30" Width="50" Content="Send" ButtonType="Normal" HorizontalAlignment="Right" Command="{Binding ClientSendCommand}" />
+                    <btnex:ButtonEx  Margin="0,0,5,5" Height="30" Width="50" Content="Clear" ButtonType="Normal" HorizontalAlignment="Right" Command="{Binding ClientSendClearCommand}" />
+                </Grid>
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="MetaNet.Views.PortScanWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             
+             xmlns:local="clr-namespace:MetaNet.Views"
+             xmlns:tbex="clr-namespace:TextBoxEx"
+             xmlns:btnex="clr-namespace:ButtonEx"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid >
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <!--<ColumnDefinition Width="150"/>-->
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Background="#f4f5f6" UseLayoutRounding="True" Grid.ColumnSpan="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+
+            </Grid.RowDefinitions>
+            <TextBlock Margin="10,10,0,0" HorizontalAlignment="Stretch" Text="Port Scan" VerticalAlignment="Top" FontSize="24" Grid.Row="0" FontWeight="Bold"/>
+            <Separator Margin="10,50,10,0" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" Grid.Row="0"></Separator>
+
+            <StackPanel Margin="10,10,10,0" MinWidth="200" Grid.Row="2">
+                <GroupBox
+                Width="Auto"
+                Height="Auto"
+                HorizontalAlignment="Stretch"
+                Header="IP And Port Config"
+                Style="{StaticResource AccentGroupBox}" >
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Style="{StaticResource MenuItemText}" Margin="5,10,0,0"  Text="IP Address" Grid.Row="0"/>
+
+                        <TextBox Margin="0,10,0,0" HorizontalAlignment="Right" Text="{Binding PortScanModel.IP}"  Grid.Row="0" Width="130"/>
+                        <TextBlock Style="{StaticResource MenuItemText}" Margin="5,10,0,0"  Text="Start Port" Grid.Row="1"/>
+                        <tbex:TextBoxEx Text="{Binding PortScanModel.StartPort}" Minimum="1" Maximum="65535"  Grid.Row="1"/>
+
+                        <TextBlock Style="{StaticResource MenuItemText}" Margin="5,10,0,0" Text="End Port" Grid.Row="2"/>
+                        <tbex:TextBoxEx Text="{Binding PortScanModel.StopPort}" Minimum="2"  Maximum="65535" Grid.Row="2"/>
+
+                        <TextBlock Style="{StaticResource MenuItemText}" Margin="5,10,0,0" Text="Socket Timeout(ms)" Grid.Row="3"/>
+                        <tbex:TextBoxEx Text="{Binding PortScanModel.SocketTimeout}" Minimum="100" Grid.Row="3"/>
+                        
+                        <btnex:ButtonEx Margin="0,15,0,10" Content="{Binding PortScanModel.ScanButtonName}" ButtonType="Normal" Grid.Row="4" HorizontalAlignment="Center" Width="100" Height="30" Command="{Binding PortScanCommand}" />
+                    </Grid>
+
+                </GroupBox>
+            </StackPanel>
+            <StackPanel Margin="10,10,10,0" MinWidth="200" Grid.Row="3">
+                <GroupBox
+                Header="Status"
+                Style="{StaticResource AccentGroupBox}" >
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Style="{StaticResource MenuItemText}" Margin="5,10,0,10"  Text="Scan" Grid.Row="0"/>
+                        <TextBlock Margin="0,10,0,10" HorizontalAlignment="Center" Text="{Binding PortScanModel.Port}" Grid.Row="0"/>
+                        
+                        <TextBlock Style="{StaticResource MenuItemText}" Margin="5,10,0,10"  Text="Opened" Grid.Row="1"/>
+                        <TextBlock Margin="0,10,0,10" HorizontalAlignment="Center"  Text="{Binding PortScanModel.OpenCnt}" Grid.Row="1"/>
+
+                        <TextBlock Style="{StaticResource MenuItemText}" Margin="5,10,0,10" Text="Closed" Grid.Row="2"/>
+                        <TextBlock Margin="0,10,0,10" HorizontalAlignment="Center"  Text="{Binding PortScanModel.CloseCnt}" Grid.Row="2"/>
+
+
+                        <!--<btnex:ButtonEx Margin="0,15,0,10" Content="{Binding PortScanModel.ScanButtonName}" ButtonType="Normal" Grid.Row="4" HorizontalAlignment="Center" Width="100" Height="30" Command="{Binding PortScanCommand}" />-->
+                    </Grid>
+
+                </GroupBox>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1">
+
+            <Grid SnapsToDevicePixels="True" ClipToBounds="True" Margin="0,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="6*"/>
+                    <RowDefinition Height="59*"/>
+                </Grid.RowDefinitions>
+                <DataGrid Width="Auto" Height="Auto" Margin="4,6,4,6" AutoGenerateColumns="True"  ColumnWidth="*" HeadersVisibility="Column"
+                    ItemsSource="{Binding PortScanResults}"
+                    RowHeight="22" Grid.RowSpan="2" />
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
+
